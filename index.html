@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+
+    <!-- fontawesome -->
+    <link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Virtual-Banking-App</title>
+  </head>
+  <body>
+    <div class="vh-100 bg-dark d-flex flex-column justify-content-center align-items-center">
+      <div class="d-flex justify-content-center align-items-center col-md-7 col-10">
+        <div id="initial-form" class="bg-white col-md-6 col-10 text-center p-4">
+          <h2 class="pb-3">Clicker Empire Game</h2>
+          <form id="bank-form" class="form" onsubmit="initializeUserAccount(); event.preventDefault()">
+            <div class="form-group">
+              <input type="text" name="userEmail" class="form-control" placeholder="Your Name" value="User01" required />
+            </div>
+            <div class="d-flex justify-content-between">
+              <div class="col-6 pl-0">
+                <button type="submit" class="btn btn-primary col-12">New</button>
+              </div>
+              <div class="col-6 pr-0">
+                <button type="submit" class="btn btn-primary col-12">Login</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- 2ページ目の枠 -->
+        <div id="bankPage" class="bg-green col-12 text-center text-white d-none"></div>
+        <!-- menu先のページ -->
+        <div id="sidePage" class="bg-white col-12 text-center d-none"></div>
+      </div>
+    </div>
+    <script src="./main.js"></script>
+  </body>
+</html>
