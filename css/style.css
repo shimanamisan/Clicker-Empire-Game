@@ -3,6 +3,12 @@ body {
   letter-spacing: 0.02em !important;
 }
 
+img {
+  width: 100%;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
 p {
   margin: 0 !important;
 }
@@ -48,4 +54,12 @@ p {
   border: solid 2px white;
   background: #1a4567;
   color: white;
+}
+
+.over-flow {
+  overflow: scroll;
+}
+
+.over-flow-height {
+  height: 50%;
 }

@@ -14,17 +14,18 @@
 
     <!-- fontawesome -->
     <link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/style.css" />
     <title>Virtual-Banking-App</title>
   </head>
   <body>
     <div class="vh-100 bg-dark d-flex flex-column justify-content-center align-items-center">
-      <div class="d-flex justify-content-center align-items-center col-md-7 col-10">
+      <!-- <div class="d-flex justify-content-center align-items-center col-md-7 col-10">
         <div id="initial-form" class="bg-white col-md-6 col-10 text-center p-4">
           <h2 class="pb-3">Clicker Empire Game</h2>
           <form id="bank-form" class="form" onsubmit="initializeUserAccount(); event.preventDefault()">
             <div class="form-group">
-              <input type="text" name="userEmail" class="form-control" placeholder="Your Name" value="User01" required />
+              <input type="text" name="userName" class="form-control" placeholder="Your Name" value="User01" required />
             </div>
             <div class="d-flex justify-content-between">
               <div class="col-6 pl-0">
@@ -36,12 +37,129 @@
             </div>
           </form>
         </div>
-        <!-- 2ページ目の枠 -->
-        <div id="bankPage" class="bg-green col-12 text-center text-white d-none"></div>
-        <!-- menu先のページ -->
-        <div id="sidePage" class="bg-white col-12 text-center d-none"></div>
+      </div> -->
+      <!-- 2ページ目の枠 -->
+      <div id="bankPage" class="bg-green container text-center text-white">
+        <div class="row justify-content-center align-items-center p-5">
+          <div class="col-4 table-bordered p-3">
+            <div>
+              <p>0 Burgers</p>
+            </div>
+            <div>
+              <p>one click ￥25</p>
+            </div>
+            <img src="./image/burger.webp" alt="" srcset="" />
+          </div>
+          <div class="col-8 p-0 text-center">
+            <div>
+              <div class="d-flex justify-content-between">
+                <div class="table-bordered col-6 py-2">テスト</div>
+                <div class="table-bordered col-6 py-2">22 years old</div>
+              </div>
+              <div class="d-flex table-bordered">
+                <div class="table-bordered col-6 py-2">333days</div>
+                <div class="table-bordered col-6 py-2">￥9999999</div>
+              </div>
+            </div>
+            <div class="bg-dark over-flow over-flow-height">
+              <div>
+                <div class="row p-3 align-items-center">
+                  <div class="col-3"><img src="./image/burger.webp" alt="" srcset="" /></div>
+                  <div class="col-9">
+                    <div class="row justify-content-between">
+                      <h4>Flip Machine</h4>
+                      <h4>0</h4>
+                    </div>
+                    <div class="row justify-content-between">
+                      <h4>￥15000</h4>
+                      <p>￥25 / click</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row p-3 align-items-center">
+                  <div class="col-3"><img src="./image/burger.webp" alt="" srcset="" /></div>
+                  <div class="col-9">
+                    <div class="row justify-content-between">
+                      <h4>Flip Machine</h4>
+                      <h4>0</h4>
+                    </div>
+                    <div class="row justify-content-between">
+                      <h4>￥15000</h4>
+                      <p>￥25 / click</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row p-3 align-items-center">
+                  <div class="col-3"><img src="./image/burger.webp" alt="" srcset="" /></div>
+                  <div class="col-9">
+                    <div class="row justify-content-between">
+                      <h4>Flip Machine</h4>
+                      <h4>0</h4>
+                    </div>
+                    <div class="row justify-content-between">
+                      <h4>￥15000</h4>
+                      <p>￥25 / click</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row p-3 align-items-center">
+                  <div class="col-3"><img src="./image/burger.webp" alt="" srcset="" /></div>
+                  <div class="col-9">
+                    <div class="row justify-content-between">
+                      <h4>Flip Machine</h4>
+                      <h4>0</h4>
+                    </div>
+                    <div class="row justify-content-between">
+                      <h4>￥15000</h4>
+                      <p>￥25 / click</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row p-3 align-items-center">
+                  <div class="col-3"><img src="./image/burger.webp" alt="" srcset="" /></div>
+                  <div class="col-9">
+                    <div class="row justify-content-between">
+                      <h4>Flip Machine</h4>
+                      <h4>0</h4>
+                    </div>
+                    <div class="row justify-content-between">
+                      <h4>￥15000</h4>
+                      <p>￥25 / click</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row p-3 align-items-center">
+                  <div class="col-3"><img src="./image/burger.webp" alt="" srcset="" /></div>
+                  <div class="col-9">
+                    <div class="row justify-content-between">
+                      <h4>Flip Machine</h4>
+                      <h4>0</h4>
+                    </div>
+                    <div class="row justify-content-between">
+                      <h4>￥15000</h4>
+                      <p>￥25 / click</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row p-3 align-items-center">
+                  <div class="col-3"><img src="./image/burger.webp" alt="" srcset="" /></div>
+                  <div class="col-9">
+                    <div class="row justify-content-between">
+                      <h4>Flip Machine</h4>
+                      <h4>0</h4>
+                    </div>
+                    <div class="row justify-content-between">
+                      <h4>￥15000</h4>
+                      <p>￥25 / click</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <script src="./main.js"></script>
+    <script src="./js/main.js"></script>
   </body>
 </html>
