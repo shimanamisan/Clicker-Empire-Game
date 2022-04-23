@@ -57,9 +57,43 @@ p {
 }
 
 .over-flow {
-  overflow: scroll;
+  overflow: auto;
 }
 
 .over-flow-height {
-  height: 50%;
+  height: 80%;
+}
+
+.bg-navy {
+  background-color: #3c5279;
+}
+
+.icon-border {
+  border: solid 1px #ffff;
+}
+
+.border-dark {
+  border: solid 3px #343a40;
+}
+
+.hover-pointer {
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.hover-pointer:hover {
+  opacity: 0.6;
+}
+
+.btn-background-color {
+  background-color: #ffff;
+}
+
+.btn-background-color:hover {
+  background-color: #676767;
+}
+
+.item-card:hover {
+  border: solid 2px #392bfc;
+  cursor: pointer;
 }
