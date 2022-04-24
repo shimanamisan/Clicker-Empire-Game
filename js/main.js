@@ -1,84 +1,72 @@
-// const config = {
-//   initialForm: document.getElementById("initial-form")
-// }
-// console.log(config.initialForm.querySelectorAll(`input[name=userName]`)[0])
+function desplayNone(elem) {
+  elem.classList.remove("d-block");
+  elem.classList.add("d-none");
+}
 
-// // json文字列
-// const jsonString = `[{"age":4,"money":40,"time":344,"purchases":["card","pizza","burger"]}]`;
+function displayBlock(elem) {
+  elem.classList.remove("d-none");
+  elem.classList.add("d-block");
+}
 
-// // json文字列をオブジェクトに変換
-// let jsonDecoded = JSON.parse(jsonString);
-
-// console.log(jsonDecoded);
-// console.log(jsonDecoded[0]);
-
-// // ユーザーにjson文字列を要求し、それをデコードします。
-// // "[{"age":4,"money":40,"time":344,"purchases":["card","pizza","burger"]}]" を貼り付けてください。
-// let userJsonString = prompt("Jsonを貼り付けてください。");
-// let userJsonDecoded = JSON.parse(jsonString);
-
-// console.log("Logging user string parsed into JavaScript data.")
-// console.log(jsonDecoded);
-// console.log(jsonDecoded[0]);
-
-// // 実際のプロジェクトでは、ユーザーデータの検証は必ず行ってください。データの検証については、上級コースのソフトウェアテストコースを参照してください。正しいjson形式が入力されていなかったり、データが不足していたり、データに誤りがあったりした場合はどうなるか考えてみましょう。
-
-// // オブジェクトをjson文字列に変換することができます。これは保存されたデータを出力するのに便利です。
-// let jsonEncoded = JSON.stringify(userJsonDecoded);
-
-// // Json.stringify()を使ってオブジェクトが文字列に変換されましたが、そのままではユーザーがゲームを再開したいとき、Json文字列を入力しなければいけません。
-// // そこでlocalStrageを使ってユーザーのブラウザ上にデータを保存してみましょう。
-
-// // localStorageとはJavaScriptを使って、クライアント側にデータを保存する仕組みです。保存容量は5MB～10MB(ブラウザによる）で、半永久的にデータを保持することができます。
-
-// // localStorageのドキュメンテーションを確認しましょう
-// // https://developer.mozilla.org/ja/docs/Web/API/Window/localStorage
-
-// // LocalStorageにデータを保存する時は、setItem()メソッドを使用します。
-// // キーと値のセットの組み合わせで保存し、形式は文字列のみです。
-// localStorage.setItem("mytext", jsonEncoded);
+const config = {
+  firstView: document.getElementById("firstView"),
+  initialForm: document.getElementById("initialForm"),
+  empirePage: document.getElementById("empirePage"),
+  newGameButton: document.getElementById("newGame"),
+  LoginButton: document.getElementById("Login"),
+}
 
 
-// // LocalStorageに保存したデータを取得したい場合は、getItem()を使用します。
+class UserAccount {
+  constructor(name) {
+    this.userName = name
+    this.setLocalstorage(this.userName)
+  }
 
-// let myLocalStrage = localStorage.getItem("mytext");
-// console.log(myLocalStrage);
+  /**
+   * @param  {string} name
+   */
+  setLocalstorage(name) {
+    const jsonString = `[{"age":4,"money":40,"time":344,"purchases":["card","pizza","burger"]}]`;
+    // json文字列をオブジェクトに変換
+    let jsonDecoded = JSON.parse(jsonString);
+    let jsonEncoded = JSON.stringify(jsonDecoded)
+    localStorage.setItem("username", jsonEncoded)
+    let myLocalStrage = localStorage.getItem("username")
+    console.log(myLocalStrage);
+  }
 
-// // 保存したデータを削除するときはremoveItem()を使います。
-// localStorage.removeItem(myLocalStrage);
 
-// // localStrageを試してみましょう。
-// // 呼び出しボタン
-// document.getElementById("sampleload").onclick = function () {
-//   if (localStorage.getItem("saveData") === null) {
-//     alert("保存されていません。");
-//     return false;
-//   }
-//   let text = localStorage.getItem("saveData");
-//   document.getElementById("sampletext").value = text;
-//   alert("呼び出しました。");
-// };
+  checkUserdata() {
+    let myLocalStrage = localStorage.getItem("username")
+    if (myLocalStrage === null) {
+      alert("データが保存されていません。")
+      return;
+    }
+    console.log(myLocalStrage);
+  }
+}
 
-// // 保存ボタン
-// document.getElementById("samplesave").onclick = function () {
-//   let text = document.getElementById("sampletext");
-//   if (!text.value) {
-//     alert("入力されていません。");
-//     return false;
-//   }
-//   localStorage.setItem("saveData", text.value);
-//   alert("保存しました。");
-//   text.value = "";
-// };
+const user = new UserAccount("user01")
+user.checkUserdata()
 
-// //削除ボタン
-// document.getElementById("sampledelete").onclick = function () {
-//   let text = document.getElementById("sampletext");
-//   if (localStorage.getItem("saveData") === null) {
-//     alert("保存されていません。");
-//     return false;
-//   }
-//   localStorage.removeItem("saveData");
-//   alert("削除しました。");
-//   text.value = "";
-// };
+function initializeUserAccount(e) {
+
+
+}
+
+/**
+ * 初期化処理
+ */
+(function () {
+
+  config.newGameButton.addEventListener('click', () => {
+    config.firstView.remove()
+    displayBlock(config.empirePage)
+  })
+
+  config.LoginButton.addEventListener('click', () => {
+    config.firstView.remove()
+    displayBlock(config.empirePage)
+  })
+}());
