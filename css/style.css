@@ -97,3 +97,7 @@ p {
   border: solid 2px #392bfc;
   cursor: pointer;
 }
+
+.item-card-height {
+  height: 100%;
+}
