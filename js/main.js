@@ -8,7 +8,7 @@ const config = {
 let dataObj = {
   "age": "20",
   "name": "",
-  "money": 50000,
+  "money": 50000000,
   "clickCount": 0,
   "incomePerClick": 25,
   "incomePerSec": 0,
@@ -16,11 +16,10 @@ let dataObj = {
   "items": [
     {
       "name": "Flip machine",
-      "type": "ability",
+      "type": "MachinePerformance",
       "currentAmount": 0,
       "maxAmount": 500,
       "perMoney": 25,
-      "perRate": 0,
       "price": 15000,
       "url": "https://cdn.pixabay.com/photo/2019/06/30/20/09/grill-4308709_960_720.png"
     },
@@ -29,8 +28,7 @@ let dataObj = {
       "type": "investment",
       "currentAmount": 0,
       "maxAmount": Infinity,
-      "perMoney": 0,
-      "perRate": 0.1,
+      "perMoney": 0.1,
       "price": 300000,
       "url": "https://cdn.pixabay.com/photo/2016/03/31/20/51/chart-1296049_960_720.png"
     },
@@ -39,8 +37,7 @@ let dataObj = {
       "type": "investment",
       "currentAmount": 0,
       "maxAmount": Infinity,
-      "perMoney": 0,
-      "perRate": 0.07,
+      "perMoney": 0.07,
       "price": 300000,
       "url": "https://cdn.pixabay.com/photo/2016/03/31/20/51/chart-1296049_960_720.png"
     },
@@ -50,7 +47,6 @@ let dataObj = {
       "currentAmount": 0,
       "maxAmount": 1000,
       "perMoney": 30,
-      "perRate": 0,
       "price": 30000,
       "url": "https://cdn.pixabay.com/photo/2012/04/15/20/36/juice-35236_960_720.png"
     },
@@ -60,7 +56,6 @@ let dataObj = {
       "currentAmount": 0,
       "maxAmount": 500,
       "perMoney": 120,
-      "perRate": 0,
       "price": 100000,
       "url": "https://cdn.pixabay.com/photo/2020/01/30/12/37/ice-cream-4805333_960_720.png"
     },
@@ -70,7 +65,6 @@ let dataObj = {
       "currentAmount": 0,
       "maxAmount": 100,
       "perMoney": 32000,
-      "perRate": 0,
       "price": 20000000,
       "url": "https://cdn.pixabay.com/photo/2016/03/31/18/42/home-1294564_960_720.png"
     },
@@ -80,7 +74,6 @@ let dataObj = {
       "currentAmount": 0,
       "maxAmount": 100,
       "perMoney": 64000,
-      "perRate": 0,
       "price": 40000000,
       "url": "https://cdn.pixabay.com/photo/2019/06/15/22/30/modern-house-4276598_960_720.png"
     },
@@ -90,7 +83,6 @@ let dataObj = {
       "currentAmount": 0,
       "maxAmount": 20,
       "perMoney": 500000,
-      "perRate": 0,
       "price": 250000000,
       "url": "https://cdn.pixabay.com/photo/2017/10/30/20/52/condominium-2903520_960_720.png"
     },
@@ -100,7 +92,6 @@ let dataObj = {
       "currentAmount": 0,
       "maxAmount": 10,
       "perMoney": 2200000,
-      "perRate": 0,
       "price": 1000000000,
       "url": "https://cdn.pixabay.com/photo/2012/05/07/17/35/factory-48781_960_720.png"
     },
@@ -110,7 +101,6 @@ let dataObj = {
       "currentAmount": 0,
       "maxAmount": 5,
       "perMoney": 25000000,
-      "perRate": 0,
       "price": 10000000000,
       "url": "https://cdn.pixabay.com/photo/2012/05/07/18/03/skyscrapers-48853_960_720.png"
     },
@@ -120,7 +110,6 @@ let dataObj = {
       "currentAmount": 0,
       "maxAmount": 1,
       "perMoney": 30000000000,
-      "perRate": 0,
       "price": 10000000000000,
       "url": "https://cdn.pixabay.com/photo/2013/07/13/10/21/train-157027_960_720.png"
     }
@@ -129,11 +118,11 @@ let dataObj = {
 
 class UserAccount {
 
-  constructor(name) {
+  constructor(name, days) {
     this.name = name
+    this.days = days
     this.getLocalStrage(name)
   }
-
   /**
   * ゲーム開始時にユーザーデータをJSONにデータを保存する
   * @param  {string} name
@@ -148,8 +137,9 @@ class UserAccount {
   }
 
   /**
-   * 
-  */
+   * ローカルストレージからデータを取得する
+   * @param  {string} name
+   */
   getLocalStrage(name) {
     let myLocalStrage = localStorage.getItem(name)
     if (myLocalStrage === null) {
@@ -162,6 +152,23 @@ class UserAccount {
     myLocalStrage = JSON.parse(myLocalStrage)
     dataObj = Object.assign(dataObj, myLocalStrage)
   }
+
+  /**
+   * 日にちをカウントするメソッド
+   * @param  {object} dataObj
+   */
+  dateCounter(dataObj) {
+    let oneYear = 365
+
+    setInterval(() => {
+      this.days++
+      View.updateUserDateArea(this.days, View.updateCurrentAmountCount())
+      if (this.days > oneYear) {
+        dataObj.age++
+        View.updateUserDateArea(this.days, View.updateCurrentAmountCount())
+      }
+    }, 1000)
+  }
 }
 
 /******************************
@@ -170,7 +177,6 @@ class UserAccount {
 class View {
   // ログインページを描画
   static createLoginPage() {
-    // INFO: 
     const container = document.createElement('div')
     container.innerHTML = `
     <div class="d-flex justify-content-center align-items-center col-8 offset-2 vh-100">
@@ -178,7 +184,7 @@ class View {
         <h2 class="pb-3">Clicker Empire Game</h2>
         <form id="bank-form" class="form" onsubmit="initializeUserAccount(); event.preventDefault()">
           <div class="form-group">
-            <input type="text" name="userName" class="form-control" placeholder="Your Name" value="User01" required />
+            <input type="text" name="userName" class="form-control" placeholder="Your Name" value="" required />
           </div>
           <div class="d-flex justify-content-between">
             <div class="col-6 pl-0">
@@ -191,25 +197,12 @@ class View {
         </form>
       </div>
     </div>`
-    return container
-  }
 
-  // ログインページ内の Newボタン にイベントを追加
-  static newGameButtonAddEvent() {
-    const newGameBtn = document.getElementById("newGame")
-    // ログインボタンを押したときの処理
-    newGameBtn.addEventListener('click', () => {
-      AppController.newGame(config.loginPage, config.empirePage)
-    })
-  }
+    // ゲームボタン実行時のイベントを指定
+    EventManager.newGameButtonAddEvent(container)
+    EventManager.loginButtonAddEvent(container)
 
-  // ログインページ内の Loginボタン にイベントを追加
-  static loginButtonAddEvent() {
-    const loginBtn = document.getElementById("Login")
-    // ログインボタンを押したときの処理
-    loginBtn.addEventListener('click', () => {
-      AppController.login()
-    })
+    config.loginPage.append(container)
   }
 
   // ゲームのメインページを描画
@@ -246,7 +239,12 @@ class View {
     // containerの子要素として追加
     container.append(innerParent)
 
-    return container
+    // config オブジェクトにid属性より取得したDOMを追加する
+    AppController.addConfigElement("itemSelect", container)
+    AppController.addConfigElement("burgerArea", container)
+    AppController.addConfigElement("itemAreaContainer", container)
+
+    config.empirePage.append(container)
   }
 
   // 左のサイドバーを描画
@@ -264,18 +262,55 @@ class View {
         <img src="./image/burger.webp" alt="" srcset="" />
       </div>
     `
-    return container
+
+    AppController.addConfigElement("burgerClick", container)
+
+    EventManager.burgerCountUPEvent()
+
+    config.burgerArea.append(container)
+  }
+
+  // 右の上部ユーザーデータエリアを描画
+  static userDataAreaRendering(currentUser) {
+    // INFO: ここで作成されるid属性
+    // userDataArea
+    // userAge
+    // countDate
+    // burgerIncome
+
+    const container = document.createElement("div")
+
+    container.innerHTML = `
+      <div class="bg-navy text-white pd-2 mb-2" id="userDataArea">
+        <div class="d-flex justify-content-between">
+          <div class="col-6 p-2 border-dark">${dataObj.name}</div>
+          <div class="col-6 p-2 border-dark" id=userAge>${dataObj.age} years old</div>
+        </div>
+        <div class="d-flex">
+          <div class="col-6 p-2 border-dark" id="countDate">${currentUser.days} days</div>
+          <div class="col-6 p-2 border-dark" id="burgerIncome">￥${dataObj.money}</div>
+        </div>
+      </div>
+      `
+
+    AppController.addConfigElement("userDataArea", container)
+    AppController.addConfigElement("userAge", container)
+    AppController.addConfigElement("countDate", container)
+    AppController.addConfigElement("burgerIncome", container)
+
+    config.itemAreaContainer.append(container)
   }
 
   // 右のサイドバーのアイテム要素を描画
-  static rightSidebarRendering() {
+  static rightSidebarRendering(currentUser) {
     // INFO: ここで作成されるid属性
     // itemArea
     const container = document.createElement("div")
+    const inner = container.cloneNode(false)
     container.classList.add("bg-dark", "over-flow", "over-flow-height", "p-2")
-    container.setAttribute("id", "itemArea")
-    const items = dataObj.items
+    inner.setAttribute("id", "itemArea")
 
+    const items = dataObj.items
     let htmlString = ""
 
     // データが存在していれば、そのデータを元にアイテムを生成する
@@ -289,11 +324,11 @@ class View {
           <div class="col-9">
             <div class="d-flex justify-content-between">
               <h4>${items[i].name}</h4>
-              <h4>￥${items[i].currentAmount}</h4>
+              <h4>${items[i].currentAmount}</h4>
               </div>
               <div class="d-flex justify-content-between">
-              <p>${items[i].price}</p>
-              <p class="text-success">￥${items[i].perRate} / sec</p>
+              <p>￥${items[i].price}</p>
+              <p class="text-success">￥${items[i].perMoney} / ${i === 0 ? "click" : "sec"} </p>
             </div>
           </div>
         </div>
@@ -301,69 +336,54 @@ class View {
       }
     }
 
-    container.innerHTML = htmlString
+    inner.innerHTML = htmlString
+    container.append(inner)
+
+    AppController.addConfigElement("itemArea", container)
 
     const itemCrads = container.querySelectorAll(".js-item-card")
     for (let i = 0; i < itemCrads.length; i++) {
       itemCrads[i].addEventListener("click", () => {
-        View.itemSelectPageRendering(items[i], items)
-        console.log("click!")
+        View.itemSelectPageRendering(items[i], i, currentUser)
       })
     }
-
-    return container
+    config.itemAreaContainer.append(container)
   }
 
-  // 右の上部ユーザーデータエリアを描画
-  static userDataAreaRendering() {
-    // INFO: ここで作成されるid属性
-    // userDataArea
-    // userAge
-    // countDate
-    // burgerIncome
+  // 1秒毎に更新する領域
+  static updateUserDateArea(days, amountPerMoney) {
 
-    const container = document.createElement("div")
+    config.countDate.innerHTML = ""
+    config.countDate.innerHTML = `${days} days`
+    config.burgerIncome.innerHTML = ""
+    config.burgerIncome.innerHTML = `￥${amountPerMoney}`
 
-    container.innerHTML = `
-      <div class="bg-navy text-white pd-2 mb-2" id="userDataArea">
-        <div class="d-flex justify-content-between">
-          <div class="col-6 p-2 border-dark">${dataObj.name}</div>
-          <div class="col-6 p-2 border-dark" data-age="${dataObj.age}" id=userAge>${dataObj.age} years old</div>
-        </div>
-        <div class="d-flex">
-          <div class="col-6 p-2 border-dark" data-count="0" id="countDate">0 days</div>
-          <div class="col-6 p-2 border-dark" id="burgerIncome">￥${dataObj.money}</div>
-        </div>
-      </div>
-      `
-    return container
   }
 
-  // 1秒毎にユーザーデータ表示領域を再描画する
-  static updateUserDateArea() {
+  // 毎秒購入しているアイテムを計算して資金を追加する
+  static updateCurrentAmountCount() {
+    let totalPerMoney = 0;
 
-    container.innerHTML = ""
-    container.innerHTML = `
-    <div class="bg-navy text-white pd-2 mb-2" id="userDataArea">
-      <div class="d-flex justify-content-between">
-        <div class="col-6 p-2 border-dark">${dataObj.name}</div>
-        <div class="col-6 p-2 border-dark" data-age="${dataObj.age}" id=userAge>${dataObj.age} years old</div>
-        </div>
-        <div class="d-flex">
-          <div class="col-6 p-2 border-dark" data-count="0" id="countDate">${dataObj.date} days</div>
-          <div class="col-6 p-2 border-dark" id="burgerIncome">￥${dataObj.money}</div>
-      </div>
-    </div>
-    `
+    for (let i = 0; i < dataObj.items.length; i++) {
 
-    return container
+      if (i === 0) continue;
+      if (dataObj.items[i].currentAmount === 0) continue;
+
+      if (dataObj.items[i].type === "investment") {
+        totalPerMoney += Math.floor(dataObj.items[i].price * (dataObj.items[i].perMoney / 100))
+      } else {
+        totalPerMoney += dataObj.items[i].perMoney
+      }
+    }
+
+    return dataObj.money += totalPerMoney
   }
 
   // アイテム購入ページを描画
-  static itemSelectPageRendering(item, items) {
+  static itemSelectPageRendering(item, index, currentUser) {
 
     const container = document.createElement("div")
-    let maxAmount = item.maxAmount === Infinity ? "∞" : item.maxAmount
+    let maxAmount = item.maxAmount === null ? "∞" : item.maxAmount
 
     config.itemArea.innerHTML = ""
     container.innerHTML = `
@@ -375,7 +395,7 @@ class View {
               <h4>${item.name}</h4>
               <p class="mb-2 js-max-purchases">Max purchases: ${maxAmount}</p>
               <p class="mb-2 js-price">Price: ￥${item.price}</p>
-              <p class="mb-2 js-get">Get ￥${item.perMoney} /click</p>
+              <p class="mb-2 js-get">Get ￥${item.perMoney} / ${index === 0 ? "click" : "sec"}</p>
             </div>
             <div class="col-5 p-2"><img src="${item.url}" alt="" srcset="" /></div>
           </div>
@@ -400,26 +420,31 @@ class View {
     config.itemArea.append(container)
 
     container.querySelectorAll("#back")[0].addEventListener("click", () => {
-      View.backItemSelectPage()
+      View.backItemSelectPage(currentUser)
     })
 
     container.querySelectorAll("#purchase")[0].addEventListener("click", () => {
-      AppController.purchaseItem()
+      AppController.purchaseItem(item.price, index, currentUser)
     })
 
     container.querySelectorAll("#purchaseCount")[0].addEventListener("change", (event) => {
-      AppController.changingCountPurchaseItem(event, items.price)
+      AppController.changingCountPurchaseItem(event, item.price)
     })
 
   }
 
   // アイテム選択ページに戻るときの処理
-  static backItemSelectPage() {
+  static backItemSelectPage(currentUser) {
     config.itemAreaContainer.innerHTML = ""
-    config.itemAreaContainer.append(View.userDataAreaRendering())
-    config.itemAreaContainer.append(View.rightSidebarRendering())
-    config.itemAreaContainer.append(View.gameSaveArea())
-    AppController.addConfigElement(["itemArea"])
+    View.userDataAreaRendering(currentUser)
+    View.rightSidebarRendering(currentUser)
+    View.gameSaveArea()
+  }
+
+  // ハンバーガーをクリックするエリアを更新する
+  static updateLeftSidebar() {
+    config.burgerArea.innerHTML = ""
+    View.leftSidebarRendering()
   }
 
   // セーブ、リセットエリアを描画
@@ -447,12 +472,45 @@ class View {
       AppController.gameSave()
     })
 
-    return container
+    config.itemAreaContainer.append(container)
+  }
+}
+
+/**********************************
+ * イベントを設定する処理を管理するクラス
+**********************************/
+class EventManager {
+  // ログインページ内の Newボタン にイベントを追加
+  static newGameButtonAddEvent(container) {
+    const newGameButton = container.querySelectorAll("#newGame")[0]
+    // ログインボタンを押したときの処理
+    newGameButton.addEventListener('click', () => {
+      AppController.newGame(config.loginPage, config.empirePage)
+    })
+  }
+
+  // ログインページ内の Loginボタン にイベントを追加
+  static loginButtonAddEvent(container) {
+    const loginButton = container.querySelectorAll("#Login")[0]
+    // ログインボタンを押したときの処理
+    loginButton.addEventListener('click', () => {
+      AppController.login()
+    })
+  }
+
+  // ハンバーガーがクリックされたときの動作
+  static burgerCountUPEvent() {
+    config.burgerClick.addEventListener("click", () => {
+      dataObj.clickCount++
+      dataObj.money += dataObj.incomePerClick
+      AppController.burgerAreaUpdate(dataObj)
+      AppController.burgerIncomeUpdate(dataObj)
+    })
   }
 }
 
 /********************************************
-* 主にイベント時に実行する処理などをまとめたクラス
+* イベント時に実行する処理などをまとめたクラス
 ********************************************/
 class AppController {
   /**
@@ -468,21 +526,14 @@ class AppController {
    * 要素を非表示にするクラスを付与するメソッド
    * @param  {object} elem
    */
-  static desplayNone(elem) {
+  static displayNone(elem) {
     elem.classList.remove("d-block");
     elem.classList.add("d-none");
   }
 
   // configに getElementById で取得した要素を追加する
-  static addConfigElement(configNames = Array) {
-
-    if (configNames.length !== 0) {
-      for (let i = 0; i < configNames.length; i++) {
-        config[configNames[i]] = document.getElementById(configNames[i])
-        // console.log(`[debug]: configを追加しました。 ${configNames[i]}`)
-        // console.log(config)
-      }
-    }
+  static addConfigElement(configName, element) {
+    config[configName] = element.querySelectorAll(`#${configName}`)[0]
   }
 
   /**
@@ -493,40 +544,44 @@ class AppController {
   static newGame(none, block) {
     const form = document.getElementById("bank-form")
     const userName = form.querySelectorAll(`input[name="userName"]`)[0].value
+
+    if (userName === "") {
+      alert("ユーザー名は入力必須です。")
+      return
+    }
+
     dataObj.name = userName
 
-    const user = new UserAccount(userName)
+    const currentUser = new UserAccount(userName, 0)
 
     this.displayBlock(block)
-    this.desplayNone(none)
+    this.displayNone(none)
 
-    config.empirePage.append(View.createEmpirePage())
-    AppController.addConfigElement(["itemSelect", "burgerArea", "itemAreaContainer"])
-
-    config.burgerArea.append(View.leftSidebarRendering())
-    AppController.addConfigElement(["burgerClick"])
-
-    config.itemAreaContainer.append(View.userDataAreaRendering())
-    AppController.addConfigElement(["userDataArea", "userAge", "countDate", "burgerIncome"])
-
-    config.itemAreaContainer.append(View.rightSidebarRendering())
-    AppController.addConfigElement(["itemArea"])
-
-    config.itemAreaContainer.append(View.gameSaveArea())
-    AppController.addConfigElement(["reset", "save"])
-
+    // メインページを描画
+    View.createEmpirePage()
+    // ハンバーガーをクリックするエリアを描画
+    View.leftSidebarRendering()
+    // ユーザーの所持金などのデータを表示するエリアを描画
+    View.userDataAreaRendering(currentUser)
+    // アイテムエリアを描画
+    View.rightSidebarRendering(currentUser)
+    // ゲームセーブやリセットボタンエリアを描画
+    View.gameSaveArea()
     // 日付をカウントするタイマーを実行
-    AppController.dateCounter(config.countDate)
+    currentUser.dateCounter()
 
-    AppController.burgerCountUPEvent()
   }
 
-  /**
-  * ゲームをロードする
-  */
+  // ゲームをロードする
   static login() {
     const form = document.getElementById("bank-form")
     const userName = form.querySelectorAll(`input[name="userName"]`)[0].value
+
+    if (userName === "") {
+      alert("ユーザー名は入力必須です。")
+      return
+    }
+
     let myLocalStrage = localStorage.getItem(userName)
 
     // 取得してきたlocalStorageのデータが空だった場合は実行しない
@@ -540,36 +595,7 @@ class AppController {
     AppController.newGame(config.loginPage, config.empirePage)
   }
 
-  /**
-   * 日にちをカウントするメソッド
-   */
-  static dateCounter(elem) {
-    let time = 0;
-    let oneYear = 365
-
-    // setInterval(() => {
-    //   time++
-    //   elem.innerHTML = `${time} days`
-    //   config.userDataArea.append(View.updateUserDateArea(dataObj.name, dataObj.age, time, dataObj.money))
-    //   if (time > oneYear) {
-    //     time = 0
-    //     dataObj.age++
-    //     config.userDataArea.append(View.updateUserDateArea(dataObj.name, dataObj.age, time, dataObj.money))
-    //   }
-    // }, 1000)
-  }
-
-  // ハンバーガーがクリックされたときの動作
-  static burgerCountUPEvent() {
-    config.burgerClick.addEventListener("click", () => {
-      dataObj.clickCount++
-      dataObj.money += dataObj.incomePerClick
-      AppController.burgerAreaUpdate(dataObj)
-      AppController.burgerIncomeUpdate(dataObj)
-    })
-  }
-
-  // ハンバーガーエリアの情報を更新する
+  // クリックしたときにハンバーガーエリアの情報を更新する
   static burgerAreaUpdate(userData) {
     const burgerCountertPoint = document.getElementById("burgerCountertPoint")
     burgerCountertPoint.innerHTML = `${userData.clickCount} Burgers`
@@ -582,13 +608,46 @@ class AppController {
 
   }
 
-  // アイテムを選択したら購入ページに遷移するイベントをセット
-
-
   // 購入ボタンをクリックしたときの処理
-  static purchaseItem() {
+  static purchaseItem(itemPrice, index, currentUser) {
     const inputBox = document.getElementById("purchaseCount")
-    console.log(inputBox.value)
+    const maxAmount = dataObj.items[index].maxAmount
+    if (inputBox.value === "" || parseInt(inputBox.value) === 0) return
+
+    let purchaseCount = parseInt(inputBox.value)
+    let totalAmount = parseInt(itemPrice) * purchaseCount
+
+    if (totalAmount >= dataObj.money) {
+      alert("購入金額をオーバーしています。")
+      return
+    }
+
+    if (maxAmount !== null && purchaseCount > maxAmount) {
+      alert("最大購入数をオーバーしています。")
+      return
+    }
+
+    // 所持金を減らす
+    dataObj.money -= totalAmount
+
+    // 購入アイテムの個数をカウントする
+    dataObj.items[index].currentAmount += purchaseCount
+
+    // 購入したアイテムがFlip machineだった場合
+    if (index === 0) {
+      // ハンバーガー売買時のレートを上げる
+      dataObj.incomePerClick += dataObj.incomePerClick * purchaseCount
+    }
+
+    // ETF Stockを購入した場合は、現在の価格より10%増額した値段にする
+    if (dataObj.items[index].name === "ETF Stock") {
+      dataObj.items[index].price = Math.floor(dataObj.items[index].price * 1.1)
+    }
+
+    // アイテム選択ページに戻る
+    View.backItemSelectPage(currentUser)
+    // ハンバーガーをクリックするエリアを更新
+    View.updateLeftSidebar()
   }
 
   // 購入する個数を選択するときに実行する処理（changeイベント）
@@ -597,14 +656,16 @@ class AppController {
     purchaseTotal.innerHTML = `total: ￥${parseInt(event.target.value) * parseInt(itemPrice)}`
   }
 
+  // ゲームをリセットする
   static gameReset() {
     if (window.confirm("現在の情報を消去します。よろしいですか？")) {
       localStorage.removeItem(dataObj.name);
-      console.log('ローカルストレージの情報を消去しました')
+      location.reload()
       return
     }
   }
 
+  // 現在のゲームの状態をローカルストレージに保存する
   static gameSave() {
     if (window.confirm("現在の情報を保存します。よろしいですか？")) {
       // setItem(key, string)
@@ -615,15 +676,7 @@ class AppController {
       return
     }
   }
-
-  static isYear(time, date) {
-    if (time > date) {
-      return 0
-    }
-  }
 }
-
-
 
 /**************
  * 初期化処理
@@ -631,11 +684,8 @@ class AppController {
 (function () {
 
   // トップページを描画
-  loginPage.append(View.createLoginPage())
-  // Loginボタンのイベントリスナーを追加
-  View.loginButtonAddEvent()
-  // NewGameボタンのイベントリスナーを追加
-  View.newGameButtonAddEvent()
+  View.createLoginPage()
+
 }());
 
 /**
