@@ -8,7 +8,7 @@ const config = {
 let dataObj = {
   "age": "20",
   "name": "",
-  "money": 50000000,
+  "money": 500000000000,
   "clickCount": 0,
   "incomePerClick": 25,
   "incomePerSec": 0,
@@ -259,7 +259,7 @@ class View {
         <p class="p-2" id="burgerRate">one click ￥${dataObj.incomePerClick}</p>
       </div>
       <div class="p-2 pt-5 d-flex justify-content-center hover-pointer" id="burgerClick">
-        <img src="./image/burger.webp" alt="" srcset="" />
+        <img class="click-animation" src="./image/burger.webp" alt="" srcset="" />
       </div>
     `
 
@@ -503,8 +503,10 @@ class EventManager {
     config.burgerClick.addEventListener("click", () => {
       dataObj.clickCount++
       dataObj.money += dataObj.incomePerClick
+      config.burgerClick.classList.add("click-animation")
       AppController.burgerAreaUpdate(dataObj)
       AppController.burgerIncomeUpdate(dataObj)
+      config.burgerClick.classList.remove("click-animation")
     })
   }
 }

@@ -101,3 +101,7 @@ p {
 .item-card-height {
   height: 100%;
 }
+
+.click-animation:active {
+  transform: translate(0,2px)
+}
