@@ -620,7 +620,7 @@ class AppController {
     let totalAmount = parseInt(itemPrice) * purchaseCount
 
     if (totalAmount >= dataObj.money) {
-      alert("購入金額をオーバーしています。")
+      alert("所持金が不足しているので購入できません。")
       return
     }
 
