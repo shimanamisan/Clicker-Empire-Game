@@ -1,0 +1,22 @@
+{
+  "name": "clicker_empire_game",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@shimanamisan.github.com:shimanamisan/Clicker-Empire-Game.git",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint --ext .js,.vue src",
+    "start": "webpack-dev-server --config webpack.config.dev.js --env=development",
+    "dev": "webpack --config webpack.config.dev.js --env=development",
+    "prod": "webpack --config webpack.config.prod.js --env=production",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,vue}\""
+  },
+  "devDependencies": {
+    "css-loader": "^6.7.1",
+    "mini-css-extract-plugin": "^2.6.1",
+    "prettier": "^2.7.1",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.11.1"
+  }
+}
