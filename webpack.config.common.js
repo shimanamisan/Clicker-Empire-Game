@@ -11,9 +11,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // HTMLテンプレートからバンドルファイルを読み込んだHTMLファイルを出力するプラグイン
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-// ビルド時にコメントとconsole.logを削除する
-const TerserPlugin = require('terser-webpack-plugin');
-
 // ESLintを使用するためのプラグイン
 const ESLintPlugin = require('eslint-webpack-plugin');
 
@@ -73,14 +70,6 @@ module.exports = {
   // 最適化（webpack4から導入された）
   optimization: {
     minimizer: [
-      new TerserPlugin({
-        extractComments: false,
-        terserOptions: {
-          compress: {
-            drop_console: true, // console.log を出力するかどうか
-          },
-        },
-      }),
       // CSSの冗長な記述を最適化して出力する
       new OptimizeCssAssetsPlugin({}),
     ],

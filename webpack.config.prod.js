@@ -46,4 +46,17 @@ module.exports = merge(commonConfig, {
       filename: `./css/style.css`,
     }),
   ],
+  optimization: {
+    // optimizationの設定の中のminimizerという設定にUglifyJsPluginインスタンスを渡す
+    minimizer: [
+      new TerserPlugin({
+        extractComments: false,
+        terserOptions: {
+          compress: {
+            drop_console: true, // console.log を出力するかどうか
+          },
+        },
+      }),
+    ],
+  },
 });
