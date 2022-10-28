@@ -1,7 +1,5 @@
 import '../scss/style.scss';
-import { dataObj } from './Modules/appData';
-
-let entity = dataObj;
+import { DataEntity } from './Modules/DataEntity';
 
 const config = {
   mainPage: document.getElementById('mainPage'),
@@ -36,15 +34,13 @@ class UserAccount {
     let myLocalStrage = localStorage.getItem(name);
     if (myLocalStrage === null) {
       // グローバルオブジェクトにユーザー名をセット
-      entity.name = name;
-      console.log(
-        'ローカルストレージにデータがありませんでした。新しくデータをセットします。'
-      );
+      const entity = new DataEntity(name);
+      console.log('ローカルストレージにデータがありませんでした。新しくデータをセットします。');
     }
 
     console.log('ローカルストレージにデータが存在していました。');
     myLocalStrage = JSON.parse(myLocalStrage);
-    entity = Object.assign(entity, myLocalStrage);
+    entity.item = Object.assign(entity.item, myLocalStrage);
   }
 
   /**
@@ -115,21 +111,8 @@ class View {
     const innerChildeItemAlea = container.cloneNode(false);
 
     // コンテナとなる要素にクラスを追加
-    container.classList.add(
-      'd-flex',
-      'justify-content-center',
-      'p-md-5',
-      'pb-5',
-      'vh-100'
-    );
-    innerParent.classList.add(
-      'bg-navy',
-      'p-2',
-      'd-flex',
-      'col-md-10',
-      'col-md-11',
-      'col-lg-10'
-    );
+    container.classList.add('d-flex', 'justify-content-center', 'p-md-5', 'pb-5', 'vh-100');
+    innerParent.classList.add('bg-navy', 'p-2', 'd-flex', 'col-md-10', 'col-md-11', 'col-lg-10');
     innerChildeurgerArea.classList.add('col-4', 'p-3', 'bg-dark');
     innerChildeItemAlea.classList.add('col-8', 'text-center');
 
@@ -225,9 +208,7 @@ class View {
       for (let i = 0; i < items.length; i++) {
         htmlString += `
         <div class="bg-navy text-white d-flex m-1 align-items-center p-3 item-card js-item-card">
-          <div class="col-3"><img src="${
-            items[i].url
-          }" alt="" srcset="" /></div>
+          <div class="col-3"><img src="${items[i].url}" alt="" srcset="" /></div>
           <div class="col-9">
             <div class="d-flex justify-content-between">
               <h4>${items[i].name}</h4>
@@ -235,9 +216,7 @@ class View {
               </div>
               <div class="d-flex justify-content-between">
               <p>￥${items[i].price}</p>
-              <p class="text-success">￥${items[i].perMoney} / ${
-          i === 0 ? 'click' : 'sec'
-        } </p>
+              <p class="text-success">￥${items[i].perMoney} / ${i === 0 ? 'click' : 'sec'} </p>
             </div>
           </div>
         </div>
@@ -276,9 +255,7 @@ class View {
       if (entity.items[i].currentAmount === 0) continue;
 
       if (entity.items[i].type === 'investment') {
-        totalPerMoney += Math.floor(
-          entity.items[i].price * (entity.items[i].perMoney / 100)
-        );
+        totalPerMoney += Math.floor(entity.items[i].price * (entity.items[i].perMoney / 100));
       } else {
         totalPerMoney += entity.items[i].perMoney;
       }
@@ -302,13 +279,9 @@ class View {
               <h4>${item.name}</h4>
               <p class="mb-2 js-max-purchases">Max purchases: ${maxAmount}</p>
               <p class="mb-2 js-price">Price: ￥${item.price}</p>
-              <p class="mb-2 js-get">Get ￥${item.perMoney} / ${
-      index === 0 ? 'click' : 'sec'
-    }</p>
+              <p class="mb-2 js-get">Get ￥${item.perMoney} / ${index === 0 ? 'click' : 'sec'}</p>
             </div>
-            <div class="col-5 p-2"><img src="${
-              item.url
-            }" alt="" srcset="" /></div>
+            <div class="col-5 p-2"><img src="${item.url}" alt="" srcset="" /></div>
           </div>
           <div class="text-white text-left">
             <p class="mb-2">How many would you like to buy?</p>
@@ -338,11 +311,9 @@ class View {
       AppController.purchaseItem(item.price, index, currentUser);
     });
 
-    container
-      .querySelectorAll('#purchaseCount')[0]
-      .addEventListener('change', (event) => {
-        AppController.changingCountPurchaseItem(event, item.price);
-      });
+    container.querySelectorAll('#purchaseCount')[0].addEventListener('change', (event) => {
+      AppController.changingCountPurchaseItem(event, item.price);
+    });
   }
 
   // アイテム選択ページに戻るときの処理
@@ -565,9 +536,7 @@ class AppController {
   // 購入する個数を選択するときに実行する処理（changeイベント）
   static changingCountPurchaseItem(event, itemPrice) {
     const purchaseTotal = document.querySelector('.js-purchases-total');
-    purchaseTotal.innerHTML = `total: ￥${
-      parseInt(event.target.value) * parseInt(itemPrice)
-    }`;
+    purchaseTotal.innerHTML = `total: ￥${parseInt(event.target.value) * parseInt(itemPrice)}`;
   }
 
   // ゲームをリセットする

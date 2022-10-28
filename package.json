@@ -10,7 +10,7 @@
     "dev": "webpack --config webpack.config.dev.js",
     "prod": "webpack --config webpack.config.prod.js --env=production",
     "build": "webpack --config webpack.config.prod.js",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,vue}\""
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,scss}\""
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",

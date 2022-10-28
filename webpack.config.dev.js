@@ -16,5 +16,4 @@ module.exports = merge(commonConfig, {
       directory: dist,
     },
   },
-
 });
