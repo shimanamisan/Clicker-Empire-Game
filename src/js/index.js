@@ -1,11 +1,21 @@
 import '../scss/style.scss';
-import { DataEntity } from './Modules/DataEntity';
+// import { DataEntity } from './Modules/DataEntity';
+//
+// import { MainPage } from './View/MainPage';
+import { LoginPage } from './View/LoginPage';
+// import { EmpirePage } from './View/EmpirePage';
 
 const config = {
   mainPage: document.getElementById('mainPage'),
   loginPage: document.getElementById('loginPage'),
   empirePage: document.getElementById('empirePage'),
 };
+
+// const mainView = new MainPage(document.getElementById('mainPage'));
+const loginView = new LoginPage(config.mainPage, config.loginPage, config.empirePage);
+// const empireView = new EmpirePage(document.getElementById('empirePage'));
+
+loginView.createLoginPage();
 
 class UserAccount {
   constructor(name, days) {
@@ -398,28 +408,6 @@ class EventManager {
  * イベント時に実行する処理などをまとめたクラス
  ********************************************/
 class AppController {
-  /**
-   * 要素を表示するクラスを付与するメソッド
-   * @param  {object} elem
-   */
-  static displayBlock(elem) {
-    elem.classList.remove('d-none');
-    elem.classList.add('d-block');
-  }
-
-  /**
-   * 要素を非表示にするクラスを付与するメソッド
-   * @param  {object} elem
-   */
-  static displayNone(elem) {
-    elem.classList.remove('d-block');
-    elem.classList.add('d-none');
-  }
-
-  // configに getElementById で取得した要素を追加する
-  static addConfigElement(configName, element) {
-    config[configName] = element.querySelectorAll(`#${configName}`)[0];
-  }
 
   /**
    * ゲームを開始する

@@ -7,6 +7,8 @@ module.exports = {
     browser: true, // console.log() などを使用してもエラーとならない
     es2020: true, // es2020までの構文を利用してもエラーとならない
   },
+  // 新しい構文でも使用できるようにする
+  parser: '@babel/eslint-parser',
   parserOptions: {
     sourceType: 'module', // import, export などのesmodulesの構文を利用してもエラーとならない
   },

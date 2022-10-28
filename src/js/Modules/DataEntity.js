@@ -123,7 +123,7 @@ export class DataEntity {
   }
 
   setAge(args) {
-    if (!isArgsValid(args)) return;
+    if (!this.isArgsValid(args)) return;
     this.#age = num;
   }
 
@@ -136,7 +136,7 @@ export class DataEntity {
   }
 
   setMoney(args) {
-    if (!isArgsValid(args)) return;
+    if (!this.isArgsValid(args)) return;
     this.#money = args;
   }
 
@@ -145,7 +145,7 @@ export class DataEntity {
   }
 
   setClickCount(args) {
-    if (!isArgsValid(args)) return;
+    if (!this.isArgsValid(args)) return;
     this.#clickCount = args;
   }
 
@@ -154,7 +154,7 @@ export class DataEntity {
   }
 
   setIncomePerClick(args) {
-    if (!isArgsValid(args)) return;
+    if (!this.isArgsValid(args)) return;
     this.#incomePerClick = args;
   }
 
@@ -163,7 +163,7 @@ export class DataEntity {
   }
 
   setIncomePerSec(args) {
-    if (!isArgsValid(args)) return;
+    if (!this.isArgsValid(args)) return;
     this.#incomePerSec = args;
   }
 
@@ -172,9 +172,7 @@ export class DataEntity {
   }
 
   setStock(args) {
-    if (!isArgsValid(args)) return;
+    if (!this.isArgsValid(args)) return;
     this.#stock = args;
   }
-
-
 }
