@@ -4,10 +4,10 @@ export class LoginPage {
   #loginPage;
   #mainPage;
   #empirePage;
-  constructor(mainPage, loginPage, empirePage) {
-    this.#mainPage = mainPage;
-    this.#loginPage = loginPage;
-    this.#empirePage = empirePage;
+  constructor(config) {
+    this.#mainPage = config.mainPage;
+    this.#loginPage = config.loginPage;
+    this.#empirePage = config.empirePage;
   }
 
   createLoginPage() {
@@ -31,6 +31,7 @@ export class LoginPage {
         </form>
       </div>
     </div>`;
+
     this.addEvent(container, 'newGame', () => AppController.newGame(this.#loginPage, this.#empirePage));
     this.addEvent(container, 'Login', () => AppController.login(this.#loginPage, this.#empirePage));
     this.#loginPage.append(container);

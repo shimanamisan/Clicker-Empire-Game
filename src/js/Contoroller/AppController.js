@@ -27,13 +27,22 @@ export class AppController {
     console.log(configName, element);
   }
 
+  /**
+   *
+   * @param {*} none
+   * @param {*} block
+   */
   static newGame(none, block) {
-    alert('click!');
+    const form = document.getElementById('bank-form');
+    const userName = form.querySelectorAll(`input[name="userName"]`)[0].value;
 
     AppController.displayBlock(block);
     AppController.displayNone(none);
   }
 
+  /**
+   *
+   */
   static login() {
     alert('click!');
   }

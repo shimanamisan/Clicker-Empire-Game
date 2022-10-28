@@ -1,6 +1,5 @@
 import '../scss/style.scss';
-// import { DataEntity } from './Modules/DataEntity';
-//
+import { DataEntity } from './Modules/DataEntity';
 // import { MainPage } from './View/MainPage';
 import { LoginPage } from './View/LoginPage';
 // import { EmpirePage } from './View/EmpirePage';
@@ -12,7 +11,7 @@ const config = {
 };
 
 // const mainView = new MainPage(document.getElementById('mainPage'));
-const loginView = new LoginPage(config.mainPage, config.loginPage, config.empirePage);
+const loginView = new LoginPage(config);
 // const empireView = new EmpirePage(document.getElementById('empirePage'));
 
 loginView.createLoginPage();
@@ -75,36 +74,6 @@ class UserAccount {
  * 画面の描画や更新を行うクラス
  ******************************/
 class View {
-  // ログインページを描画
-  static createLoginPage() {
-    const container = document.createElement('div');
-    container.innerHTML = `
-    <div class="d-flex justify-content-center align-items-center col-8 offset-2 vh-100">
-      <div id="initialForm" class="bg-white col-md-8 col-lg-6 col-sm-12 text-center p-4">
-        <h2 class="pb-3">Clicker Empire Game</h2>
-        <form id="bank-form" class="form" onsubmit="event.preventDefault();">
-          <div class="form-group">
-            <input type="text" name="userName" class="form-control" placeholder="Your Name" value="" required />
-          </div>
-          <div class="d-flex justify-content-between">
-            <div class="col-6 pl-0">
-              <button type="submit" class="btn btn-primary col-12" id="newGame">New</button>
-            </div>
-            <div class="col-6 pr-0">
-              <button type="submit" class="btn btn-primary col-12" id="Login">Login</button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>`;
-
-    // ゲームボタン実行時のイベントを指定
-    EventManager.newGameButtonAddEvent(container);
-    EventManager.loginButtonAddEvent(container);
-
-    config.loginPage.append(container);
-  }
-
   // ゲームのメインページを描画
   static createEmpirePage() {
     // INFO: ここで作成されるid属性
@@ -408,7 +377,6 @@ class EventManager {
  * イベント時に実行する処理などをまとめたクラス
  ********************************************/
 class AppController {
-
   /**
    * ゲームを開始する
    * @param  {object} none
