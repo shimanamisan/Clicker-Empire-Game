@@ -14,15 +14,16 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 // ESLintを使用するためのプラグイン
 const ESLintPlugin = require('eslint-webpack-plugin');
 
+// jsファイルとcssファイルを分割するためのプラグイン
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 module.exports = {
-  // エントリーポイントの設定：モジュールをバンドルするための対象物を設定している
-  // babel-loader8 でasync/awaitを動作させるためには、@babel/polyfillが必要
-  entry: ['@babel/polyfill', './src/js/index.js'],
+  entry: './src/js/index.js',
   output: {
     // 絶対パスを指定
     path: `${dist}`,
     // 出力するファイル名を設定
-    filename: './js/bundle.js',
+    filename: './js/bundle.mim.js',
   },
   module: {
     rules: [
@@ -36,6 +37,18 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         // ローダーに対する設定は babel.config.js というファイルに切り出して設定する
+      },
+      // ***********************
+      // * scssに関する設定
+      // ***********************
+      {
+        test: /\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+        ],
       },
       // ***********************
       // * 画像ファイルに関する設定
@@ -57,6 +70,13 @@ module.exports = {
     // 指定した出力ディレクトリ内のファイルをクリーンアップ（削除）する
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ['**/*', '!**.json'],
+    }),
+    // jsファイルとcssファイルを分割するためのプラグイン
+    new MiniCssExtractPlugin({
+      // ファイルの出力先（相対パスを指定しないとエラーになる）
+      // エントリーポイントのjsディレクトリが基準となるので出力先には注意
+      // "./src/index.js"を起点に出力先を指定する
+      filename: `./css/style.min.css`,
     }),
     // HTMLのテンプレートファイルからバンドルされたモジュールを読み込んだHTMLファイルを出力する
     new HtmlWebpackPlugin({

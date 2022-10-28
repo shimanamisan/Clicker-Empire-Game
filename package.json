@@ -8,6 +8,7 @@
     "lint": "eslint --ext .js,.vue src",
     "start": "webpack-dev-server --config webpack.config.dev.js",
     "dev": "webpack --config webpack.config.dev.js",
+    "prod": "webpack --config webpack.config.prod.js --env=production",
     "build": "webpack --config webpack.config.prod.js",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,vue}\""
   },
@@ -26,6 +27,7 @@
     "mini-css-extract-plugin": "^2.6.1",
     "node-sass": "^7.0.3",
     "optimize-css-assets-webpack-plugin": "^6.0.1",
+    "postcss-loader": "^7.0.1",
     "prettier": "^2.7.1",
     "sass-loader": "^13.0.2",
     "terser-webpack-plugin": "^5.3.6",
