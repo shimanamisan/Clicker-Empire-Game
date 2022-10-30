@@ -52,7 +52,7 @@ module.exports = {
         // webpack 5からurl-loader/file-loader/raw-loaderが要らなくなった
         // 拡張子の大文字も許容するように最後尾に i を加える
         // jpegとjpgの様にeがあるかないかを許容するのに、jpe?gという形式にする
-        test: /\.(jpe?g|png|svg|gif|ico)$/i,
+        test: /\.(jpe?g|png|svg|gif|ico|webp)$/i,
         type: 'asset/resource',
         generator: {
           filename: 'images/[name][ext]',

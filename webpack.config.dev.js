@@ -5,7 +5,6 @@ const dist = path.resolve(__dirname, 'dist');
 
 module.exports = merge(commonConfig, {
   mode: 'development',
-  watch: true,
   // INFO: https://webpack.js.org/configuration/devtool/#devtool
   // ソースマップの品質を指定する
   devtool: 'eval-cheap-module-source-map',

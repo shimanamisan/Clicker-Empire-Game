@@ -1,13 +1,13 @@
-export class DataEntity {
-  #age = '20';
-  #name = '';
-  #money = 500000000000;
-  #clickCount = 0;
-  #incomePerClick = 25;
-  #incomePerSec = 0;
-  #stock = 0;
+export const dataEntity = {
+  age: '20',
+  name: '',
+  money: 50000,
+  clickCount: 0,
+  incomePerClick: 25,
+  incomePerSec: 0,
+  stock: 0,
 
-  items = [
+  items: [
     {
       name: 'Flip machine',
       type: 'MachinePerformance',
@@ -107,72 +107,5 @@ export class DataEntity {
       price: 10000000000000,
       url: 'https://cdn.pixabay.com/photo/2013/07/13/10/21/train-157027_960_720.png',
     },
-  ];
-
-  constructor(name) {
-    this.#name = name;
-  }
-
-  isArgsValid(num) {
-    if (typeof num !== 'number' || num === null || num === undefined) return false;
-    return true;
-  }
-
-  getAge() {
-    return this.#age;
-  }
-
-  setAge(args) {
-    if (!this.isArgsValid(args)) return;
-    this.#age = num;
-  }
-
-  getName() {
-    return this.#name;
-  }
-
-  getMoney() {
-    return this.#money;
-  }
-
-  setMoney(args) {
-    if (!this.isArgsValid(args)) return;
-    this.#money = args;
-  }
-
-  getClickCount() {
-    return this.#clickCount;
-  }
-
-  setClickCount(args) {
-    if (!this.isArgsValid(args)) return;
-    this.#clickCount = args;
-  }
-
-  getIncomePerClick() {
-    return this.#incomePerClick;
-  }
-
-  setIncomePerClick(args) {
-    if (!this.isArgsValid(args)) return;
-    this.#incomePerClick = args;
-  }
-
-  getIncomePerSec() {
-    return this.#incomePerSec;
-  }
-
-  setIncomePerSec(args) {
-    if (!this.isArgsValid(args)) return;
-    this.#incomePerSec = args;
-  }
-
-  getStock() {
-    return this.#stock;
-  }
-
-  setStock(args) {
-    if (!this.isArgsValid(args)) return;
-    this.#stock = args;
-  }
-}
+  ],
+};
