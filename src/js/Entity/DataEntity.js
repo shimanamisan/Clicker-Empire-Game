@@ -1,12 +1,12 @@
-// グローバルオブジェクト、データの状態などここで管理する
-export const dataObj = {
+export const dataEntity = {
   age: '20',
   name: '',
-  money: 500000000000,
+  money: 50000,
   clickCount: 0,
   incomePerClick: 25,
   incomePerSec: 0,
   stock: 0,
+
   items: [
     {
       name: 'Flip machine',

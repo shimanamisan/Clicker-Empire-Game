@@ -11,21 +11,19 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // HTMLテンプレートからバンドルファイルを読み込んだHTMLファイルを出力するプラグイン
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-// ビルド時にコメントとconsole.logを削除する
-const TerserPlugin = require('terser-webpack-plugin');
-
 // ESLintを使用するためのプラグイン
 const ESLintPlugin = require('eslint-webpack-plugin');
 
+// jsファイルとcssファイルを分割するためのプラグイン
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 module.exports = {
-  // エントリーポイントの設定：モジュールをバンドルするための対象物を設定している
-  // babel-loader8 でasync/awaitを動作させるためには、@babel/polyfillが必要
-  entry: ['@babel/polyfill', './src/js/index.js'],
+  entry: './src/js/index.js',
   output: {
     // 絶対パスを指定
     path: `${dist}`,
     // 出力するファイル名を設定
-    filename: './js/bundle.js',
+    filename: './js/bundle.mim.js',
   },
   module: {
     rules: [
@@ -41,13 +39,20 @@ module.exports = {
         // ローダーに対する設定は babel.config.js というファイルに切り出して設定する
       },
       // ***********************
+      // * scssに関する設定
+      // ***********************
+      {
+        test: /\.scss$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
+      },
+      // ***********************
       // * 画像ファイルに関する設定
       // ***********************
       {
         // webpack 5からurl-loader/file-loader/raw-loaderが要らなくなった
         // 拡張子の大文字も許容するように最後尾に i を加える
         // jpegとjpgの様にeがあるかないかを許容するのに、jpe?gという形式にする
-        test: /\.(jpe?g|png|svg|gif|ico)$/i,
+        test: /\.(jpe?g|png|svg|gif|ico|webp)$/i,
         type: 'asset/resource',
         generator: {
           filename: 'images/[name][ext]',
@@ -61,6 +66,13 @@ module.exports = {
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ['**/*', '!**.json'],
     }),
+    // jsファイルとcssファイルを分割するためのプラグイン
+    new MiniCssExtractPlugin({
+      // ファイルの出力先（相対パスを指定しないとエラーになる）
+      // エントリーポイントのjsディレクトリが基準となるので出力先には注意
+      // "./src/index.js"を起点に出力先を指定する
+      filename: `./css/style.min.css`,
+    }),
     // HTMLのテンプレートファイルからバンドルされたモジュールを読み込んだHTMLファイルを出力する
     new HtmlWebpackPlugin({
       template: './src/html/index.html',
@@ -73,14 +85,6 @@ module.exports = {
   // 最適化（webpack4から導入された）
   optimization: {
     minimizer: [
-      new TerserPlugin({
-        extractComments: false,
-        terserOptions: {
-          compress: {
-            drop_console: true, // console.log を出力するかどうか
-          },
-        },
-      }),
       // CSSの冗長な記述を最適化して出力する
       new OptimizeCssAssetsPlugin({}),
     ],
