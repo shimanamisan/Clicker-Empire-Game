@@ -18,6 +18,6 @@ module.exports = {
   // extendsで指定したルールと重複した場合はこちらの設定が有効になる
   rules: {
     'prefer-const': 'error', // 更新をしない変数にconst以外が指定されていたらエラーが発生するルール
-    'no-import-assign': "off" // import 文で作成した変数への代入のチェックを無効化
+    'no-import-assign': 'off', // import 文で作成した変数への代入のチェックを無効化
   },
 };
