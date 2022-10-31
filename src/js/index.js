@@ -1,28 +1,33 @@
-import '../image/burger.webp'
+import '../image/burger.webp';
 import '../scss/style.scss';
 import { dataEntity } from './Entity/DataEntity';
 
+/**
+ * elementオブジェクトの情報を格納する
+ */
 const config = {
   mainPage: document.getElementById('mainPage'),
   loginPage: document.getElementById('loginPage'),
   empirePage: document.getElementById('empirePage'),
 };
 
+//#region ユーザーアカウントクラス
 class UserAccount {
   constructor(name, days) {
     this.name = name;
     this.days = days;
   }
 }
+//#endregion
 
 //#region ログインページ描画
-/******************************
- * ログインページ描画
- ******************************/
 class LoginPage {
   static loginPage = config.loginPage;
   static empirePage = config.empirePage;
 
+  /**
+   * HTML要素を描画
+   */
   static createPage() {
     const container = document.createElement('div');
     container.innerHTML = `
@@ -50,22 +55,25 @@ class LoginPage {
     this.loginPage.append(container);
   }
 
-  static addEvent(dom, id, func) {
-    const selector = dom.querySelectorAll(`#${id}`)[0];
+  /**
+   * イベントリスナーを追加する
+   * @param {object} element - HTML要素
+   * @param {string} id - イベントリスナーを設定するID要素の文字列
+   * @param {function} func - イベントリスナーに追加する処理
+   */
+  static addEvent(element, id, func) {
+    const selector = element.querySelectorAll(`#${id}`)[0];
     selector.addEventListener('click', func);
   }
 }
 //#endregion
 
 //#region  購入ページ描画
-/******************************
- * 購入ページ描画
- ******************************/
 class EmpirePage {
   static empirePage = config.empirePage;
 
   /**
-   * DOMを生成
+   * HTML要素を描画
    */
   static createPage() {
     const container = document.createElement('div');
@@ -79,9 +87,9 @@ class EmpirePage {
   }
 
   /**
-   * DOM要素に必要なクラスを追加
-   * @param {*} element
-   * @returns
+   * HTML要素に必要なクラスを追加
+   * @param {object} element - HTML要素
+   * @returns {object}
    */
   static addClass(element) {
     // trueを指定すると子ノードまで取得する
@@ -112,6 +120,10 @@ class EmpirePage {
     return element;
   }
 
+  /**
+   * 新しいID要素をオブジェクトに追加する
+   * @param {object} element - HTML要素
+   */
   static addConfigElement(element) {
     config[`itemSelect`] = element.querySelectorAll(`#itemSelect`)[0];
     config[`burgerArea`] = element.querySelectorAll(`#burgerArea`)[0];
@@ -122,6 +134,9 @@ class EmpirePage {
 
 //#region 左のハンバーガーエリア要素を描画
 class LeftBurgerAreaElement {
+  /**
+   * HTML要素を描画
+   */
   static createPage() {
     const container = document.createElement('div');
 
@@ -143,10 +158,17 @@ class LeftBurgerAreaElement {
     config.burgerArea.append(container);
   }
 
+  /**
+   * 新しいID要素をオブジェクトに追加する
+   * @param {object} element - HTML要素
+   */
   static addConfigElement(element) {
     config[`burgerClick`] = element.querySelectorAll(`#burgerClick`)[0];
   }
 
+  /**
+   * イベントリスナーを追加する
+   */
   static addEvent() {
     config.burgerClick.addEventListener('click', () => {
       dataEntity.clickCount++;
@@ -169,7 +191,7 @@ class LeftBurgerAreaElement {
 
   /**
    * ハンバーガーを焼いたことにより得た所得を更新する
-   * @param {*} userData - ユーザーオブジェクト
+   * @param {object} userData - ユーザーオブジェクト
    */
   static burgerIncomeUpdate(userData) {
     const burgerIncomeArea = document.getElementById('burgerIncome');
@@ -179,18 +201,18 @@ class LeftBurgerAreaElement {
   /**
    * アイテム購入ページから戻るときに再描画させる処理
    */
-  static update(){
-    config.burgerArea.innerHTML = ""
+  static update() {
+    config.burgerArea.innerHTML = '';
     this.createPage();
   }
 }
 //#endregion
 
 //#region 右の上部ユーザーデータエリアを描画
-/******************************
- * 右の上部ユーザーデータエリアを描画
- ******************************/
 class UserDataAreaElement {
+  /**
+   * HTML要素を描画
+   */
   static createPage(userData) {
     const container = document.createElement('div');
 
@@ -212,6 +234,10 @@ class UserDataAreaElement {
     config.itemAreaContainer.append(container);
   }
 
+  /**
+   * 新しいID要素をオブジェクトに追加する
+   * @param {object} element - HTML要素
+   */
   static addConfigElement(element) {
     config[`userDataArea`] = element.querySelectorAll(`#userDataArea`)[0];
     config[`userAge`] = element.querySelectorAll(`#userAge`)[0];
@@ -222,10 +248,11 @@ class UserDataAreaElement {
 //#endregion
 
 //#region アイテム選択エリアの描画
-/******************************
- * アイテム選択エリアの描画
- ******************************/
 class ItemSelectAreaElement {
+  /**
+   * HTML要素を描画
+   * @param {object} userData - ユーザーオブジェクト
+   */
   static createPage(userData) {
     const container = document.createElement('div');
     const innerElement = container.cloneNode(false);
@@ -274,6 +301,10 @@ class ItemSelectAreaElement {
     config.itemAreaContainer.append(container);
   }
 
+  /**
+   * 新しいID要素をオブジェクトに追加する
+   * @param {object} element - HTML要素
+   */
   static addConfigElement(element) {
     config[`itemArea`] = element.querySelectorAll(`#itemArea`)[0];
   }
@@ -283,7 +314,7 @@ class ItemSelectAreaElement {
 //#region アイテム購入ページを描画
 class ItemPaymentPageAreaElement {
   /**
-   * アイテム購入ページを描画
+   * HTML要素を描画
    * @param {object} dataEntity - データエンティティ
    * @param {int} index - データエンティティ内の購入アイテムを反復処理したときのインデックス
    * @param {object} userData - ユーザーオブジェクト
@@ -419,7 +450,7 @@ class GameSaveArea {
     const container = document.createElement('div');
 
     container.innerHTML = `
-    <div class="d-flex justify-content-end mt-3">
+    <div class="d-flex justify-content-end">
       <div class="p-2 icon-border mr-2 hover-pointer" id="reset">
         <i class="fas fa-undo fa-2x text-white"></i>
       </div>
@@ -548,7 +579,11 @@ class AppController {
     this.newGame(config.loginPage, config.empirePage);
   }
 
-  // 1秒毎にデータを更新する
+  /**
+   * 1秒毎にデータを更新する
+   * @param {int} days - ユーザーが保持している日数
+   * @param {int} amountPerMoney - 購入しているアイテムより毎秒増える資産
+   */
   static updateUserDateArea(days, amountPerMoney) {
     config.countDate.innerHTML = '';
     config.countDate.innerHTML = `${days} days`;
@@ -595,5 +630,5 @@ class AppController {
   }
 }
 
-
+// トップページを描画する
 LoginPage.createPage();
