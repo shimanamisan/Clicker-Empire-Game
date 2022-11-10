@@ -15,6 +15,7 @@ Recursion Project3 -Clicker-Empire-Game-
 ※デモとして最初から様々なアイテムを購入できるように、所持している資金を増額しています。
 
 ## DEMO:
+
 ![readme-movie](https://user-images.githubusercontent.com/49751604/198932443-952d6db1-433b-40bf-ab9d-0881190be275.gif)
 
 # Pages URL
