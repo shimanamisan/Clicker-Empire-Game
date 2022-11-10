@@ -1,5 +1,6 @@
 const path = require('path');
 const dist = path.resolve(__dirname, 'dist');
+const src = path.resolve(__dirname, 'src');
 
 // 別ファイルに出力したCSSファイルを圧縮するために必要
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -86,5 +87,15 @@ module.exports = {
       // CSSの冗長な記述を最適化して出力する
       new OptimizeCssAssetsPlugin({}),
     ],
+  },
+  resolve: {
+    // エイリアスを指定
+    alias: {
+      '@js': `${src}/js`,
+      '@img': `${src}/images`,
+      '@scss': `${src}/scss`,
+    },
+    // importするときのファイル名から拡張子部分を省略できるようになる
+    extensions: ['*', '.js', '.scss', '.json', '.jpg'],
   },
 };
