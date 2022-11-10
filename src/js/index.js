@@ -1,5 +1,5 @@
-import '../image/burger.webp';
-import '../scss/style.scss';
+import '@img/burger.webp';
+import '@scss/style';
 import { dataEntity } from './Entity/DataEntity';
 
 /**
