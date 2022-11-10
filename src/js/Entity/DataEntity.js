@@ -1,7 +1,7 @@
 export const dataEntity = {
   age: '20',
   name: '',
-  money: 50000,
+  money: 5000000, // スタート時の所持金（※デモのため多めにしている。デフォルトは本来なら50000）
   clickCount: 0,
   incomePerClick: 25,
   incomePerSec: 0,

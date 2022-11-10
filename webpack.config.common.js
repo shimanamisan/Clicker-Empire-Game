@@ -1,6 +1,5 @@
 const path = require('path');
 const dist = path.resolve(__dirname, 'dist');
-const src = path.resolve(__dirname, 'src');
 
 // 別ファイルに出力したCSSファイルを圧縮するために必要
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -23,6 +22,8 @@ module.exports = {
     // 絶対パスを指定
     path: `${dist}`,
     // 出力するファイル名を設定
+    // pathで指定したディレクトリに出力される
+    // ディレクトリを含めるとjsやcssを分けて出力できる
     filename: './js/bundle.mim.js',
   },
   module: {
@@ -68,9 +69,7 @@ module.exports = {
     }),
     // jsファイルとcssファイルを分割するためのプラグイン
     new MiniCssExtractPlugin({
-      // ファイルの出力先（相対パスを指定しないとエラーになる）
-      // エントリーポイントのjsディレクトリが基準となるので出力先には注意
-      // "./src/index.js"を起点に出力先を指定する
+      // エントリーポイントのoutputオプションのfilenameと同じ動作をする
       filename: `./css/style.min.css`,
     }),
     // HTMLのテンプレートファイルからバンドルされたモジュールを読み込んだHTMLファイルを出力する
@@ -82,7 +81,6 @@ module.exports = {
       fix: true, // 一部のエラーを自動で修正する
     }),
   ],
-  // 最適化（webpack4から導入された）
   optimization: {
     minimizer: [
       // CSSの冗長な記述を最適化して出力する
